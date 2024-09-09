@@ -1,8 +1,9 @@
 import { View, Text, Pressable, Image, StyleSheet } from "react-native"
 import Entypo from '@expo/vector-icons/Entypo';
+import { useNavigation } from "@react-navigation/native";
 
 
-export default function MealItem({ title, imageUrl, duration, complexity, affordability, isGlutenFree, isVegan, isVegetarian, isLactoseFree }) {
+export default function MealItem({ id,  title, imageUrl, duration, complexity, affordability, isGlutenFree, isVegan, isVegetarian, isLactoseFree }) {
     function iconChecker(item) {
         if (item) {
             return <Entypo name="check" size={18} color="black" />;
@@ -20,10 +21,17 @@ export default function MealItem({ title, imageUrl, duration, complexity, afford
             return '$';
         }
     }
+
+    const navigation = useNavigation();
+    function goToMeal(){
+            navigation.navigate('Meal', {
+            mealID: id
+        })
+    }
     
     return (
     <View style={styles.mealItemContainer}>
-        <Pressable>
+        <Pressable onPress={goToMeal} >
             <View>
                 <Image source={{uri: imageUrl}} style={styles.image} />
                 <Text style={styles.title} >{title}</Text>

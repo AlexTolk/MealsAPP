@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font';
 
 import  IndexScreen  from './screens/IndexScreen';
 import MealsOverViewScreen from './screens/MealsOverviewScreen';
+import Meal from './screens/Meal';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,9 +25,24 @@ export default function App() {
     <>
       <StatusBar style='dark' />
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='All recipes' component={IndexScreen} />
-          <Stack.Screen name='Recipes' component={MealsOverViewScreen} />
+        <Stack.Navigator screenOptions={{
+          headerStyle: { backgroundColor: 'crimson' },
+          headerTintColor: 'white',
+          contentStyle: { backgroundColor: 'pink' }
+        }}>
+          <Stack.Screen
+          name='All recipes'
+          component={IndexScreen}
+          options={{
+            title: 'All categories',
+
+          }}
+          />
+          <Stack.Screen
+          name='Recipes'
+          component={MealsOverViewScreen} 
+          />
+          <Stack.Screen name='Meal' component={Meal}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -1,26 +1,40 @@
 import { View,  StyleSheet, FlatList } from 'react-native';
-import { MEALS } from '../data/dummy-data';
+import { useLayoutEffect } from 'react';
+import { MEALS, CATEGORIES } from '../data/dummy-data';
 import MealItem from '../components/MealItem';
 
-function MealsOverViewScreen({ route }) {
+function MealsOverViewScreen({ route, navigation }) {
     const ID = route.params.categoryId;
 
     const displayedItems = MEALS.filter((mealItem) => {
         return mealItem.categoryIds.indexOf(ID) >= 0;
     });
+
+    useLayoutEffect(() => {
+        const categoryTitle = CATEGORIES.find((category) => category.id ===ID).title;
+        navigation.setOptions({
+            title: categoryTitle,
+        }); 
+    }, [ID, navigation])
+
+
     
     function renderMealItem(itemData){
-        return <MealItem
-        title={itemData.item.title}
-        imageUrl={itemData.item.imageUrl}
-        duration={itemData.item.duration}
-        complexity={itemData.item.complexity}
-        affordability={itemData.item.affordability}
-        isGlutenFree={itemData.item.isGlutenFree}
-        isVegan={itemData.item.isVegan}
-        isVegetarian={itemData.item.isVegetarian}
-        isLactoseFree={itemData.item.isLactoseFree}
-        />
+        const item = itemData.item
+
+        const mealItemProps = {
+            id: item.id,
+            title: item.title,
+            imageUrl: item.imageUrl,
+            duration: item.duration,
+            complexity: item.complexity,
+            affordability: item.affordability,
+            isGlutenFree: item.isGlutenFree,
+            isVegan: item.isVegan,
+            isVegetarian: item.isVegetarian,
+            isLactoseFree: item.isLactoseFree,
+        }
+        return <MealItem {...mealItemProps} />
     }
     
     return(
